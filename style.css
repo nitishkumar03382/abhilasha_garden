@@ -1,0 +1,89 @@
+html{
+    height: 100%;
+    margin: auto;
+    /* width: 960px; */
+    overflow: scroll;
+}
+        .cr-head{
+            font-size: 35px;
+            font-weight: 600;
+            font-family: sans-serif;
+        }
+        .cr-p{
+            font-size: 24px;
+            font-weight: 300;
+            font-family: cursive, sans-serif;
+        }
+        hr{
+            margin-right: auto;
+            margin-left: auto;
+            height: 0px;
+            border-top: 5px dotted green;
+        }
+        .nav-link{
+            color: whitesmoke;
+        }
+        #book-btn{
+            box-shadow: 0 5px 15px rgba(192, 179, 201, 0.4);
+            /* border: 4px solid rgba(218, 229, 218, 0.594); */
+            border-radius: 15px;
+            width: 200px;
+            font-size: 24px;
+            font-weight: 600;
+            border: 1px solid rgba(233, 233, 240, 0.612);
+        }
+        .services{
+            /* height: 300px; */
+            background-color: rgb(252, 252, 252);
+            color: rgb(19, 1, 1);
+            padding: auto;
+            
+        }
+      
+        .service p, h3{
+            padding: 20px;
+            margin:0px;
+        }
+/* GALLERY */
+.gallery-head{
+    font-family: cursive, sans-serif;
+    background-color: blueviolet;
+}
+#gallery{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 5px solid;
+    border-image: linear-gradient(45deg, gold, deeppink) 1;
+    clip-path: inset(0px round 10px);
+    animation: huerotate 6s infinite linear;
+    filter: hue-rotate(360deg);
+}
+@keyframes huerotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+
+@media screen and (min-width: 480px) {
+   
+  }
+  /* FACILITIES */
+  .facility-head{
+    text-align: center;
+    margin-top: 10px;
+  }
+  .facility-head h1{
+    text-shadow: 0 5px 15px rgba(123, 15, 200, 0.637);
+    font-family: cursive, sans-serif;
+  }
+  .facility-head p{
+    font-size: 18px;
+  }
+  .fac-row img{
+    box-shadow: 0 5px 15px rgba(123, 15, 200, 0.637);
+  }
