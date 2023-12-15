@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        canvas {
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ac1414;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pingPongCanvas" width="800" height="400"></canvas>
+
+    <script>
+        // Get the canvas and context
+        const canvas = document.getElementById("pingPongCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Initial ball position and speed
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        let ballSpeedX = 5;
+        let ballSpeedY = 2;
+
+        // Paddle properties
+        const paddleHeight = 100;
+        const paddleWidth = 10;
+        let paddle1Y = (canvas.height - paddleHeight) / 2;
+        let paddle2Y = (canvas.height - paddleHeight) / 2;
+        const paddleSpeed = 10;
+
+        // Scores
+        let player1Score = 0;
+        let player2Score = 0;
+
+        function draw() {
+            // Draw the canvas
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the paddles
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, paddle1Y, paddleWidth, paddleHeight);
+            ctx.fillRect(canvas.width - paddleWidth, paddle2Y, paddleWidth, paddleHeight);
+
+            // Draw the ball
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, 10, 0, Math.PI * 2);
+            ctx.fillStyle = "#fff";
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw the scores
+            ctx.font = "20px Arial";
+            ctx.fillText("Player 1: " + player1Score, 50, 50);
+            ctx.fillText("Player 2: " + player2Score, canvas.width - 150, 50);
+        }
+
+        function move() {
+            // Move paddles
+            if (paddle1Y + paddleHeight < canvas.height && paddle1Y > 0) {
+                if (upArrowPressed) {
+                    paddle1Y -= paddleSpeed;
+                }
+                if (downArrowPressed) {
+                    paddle1Y += paddleSpeed;
+                }
+            }
+
+            if (paddle2Y + paddleHeight < canvas.height && paddle2Y > 0) {
+                if (ballY > paddle2Y + paddleHeight / 2) {
+                    paddle2Y += paddleSpeed;
+                } else {
+                    paddle2Y -= paddleSpeed;
+                }
+            }
+
+            // Move the ball
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            // Ball collision with paddles
+            if (
+                (ballX - 10 < paddleWidth && ballY > paddle1Y && ballY < paddle1Y + paddleHeight) ||
+                (ballX + 10 > canvas.width - paddleWidth && ballY > paddle2Y && ballY < paddle2Y + paddleHeight)
+            ) {
+                ballSpeedX = -ballSpeedX;
+            }
+
+            // Ball collision with top and bottom walls
+            if (ballY - 10 < 0 || ballY + 10 > canvas.height) {
+                ballSpeedY = -ballSpeedY;
+            }
+
+            // Scoring
+            if (ballX - 10 < 0) {
+                // Player 2 scores a point
+                player2Score++;
+                resetBall();
+            }
+
+            if (ballX + 10 > canvas.width) {
+                // Player 1 scores a point
+                player1Score++;
+                resetBall();
+            }
+        }
+
+        function resetBall() {
+            ballX = canvas.width / 2;
+            ballY = canvas.height / 2;
+        }
+
+        let upArrowPressed = false;
+        let downArrowPressed = false;
+
+        document.addEventListener("keydown", function(event) {
+            if (event.code === "ArrowUp") {
+                upArrowPressed = true;
+            } else if (event.code === "ArrowDown") {
+                downArrowPressed = true;
+            }
+        });
+
+        document.addEventListener("keyup", function(event) {
+            if (event.code === "ArrowUp") {
+                upArrowPressed = false;
+            } else if (event.code === "ArrowDown") {
+                downArrowPressed = false;
+            }
+        });
+
+        function gameLoop() {
+            draw();
+            move();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
